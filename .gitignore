@@ -1,4 +1,20 @@
-# ignore node modules
+# database files / runtime data
+server/data/
+server/*.log
+server/*.wt
+server/mongod.lock
+
+# capacitor/android build outputs
+client/android/gradle/
+client/android/.gradle/
+client/android/app/build/
+
+# environment files
+*.env
+client/.env
+server/.env
+
+# dependencies
 node_modules/
 client/node_modules/
 server/node_modules/
@@ -9,6 +25,4 @@ yarn.lock
 
 # logs and temp
 *.log
-
-env
 .DS_Store
