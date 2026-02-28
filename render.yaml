@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: aquanova-backend
+    runtime: node
+    plan: free # Change to 'starter' if you need more power
+    buildCommand: npm install
+    startCommand: node index.js
+    rootDir: server
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_VERSION
+        value: 18
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SUPABASE_URL
+        sync: false # You will be prompted to enter this in the Render dashboard
+      - key: SUPABASE_KEY
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
