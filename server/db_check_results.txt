@@ -1,0 +1,4 @@
+--- Supabase DB Check ---
+Total Users found: 2
+User 0: email="test@aquanova.com", name="Aqua Test"
+User 1: email="99230040493@klu.ac.in", name="Pavankumar Bijjala"

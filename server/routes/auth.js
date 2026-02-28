@@ -141,7 +141,12 @@ router.post('/login', async (req, res) => {
             .eq('email', email)
             .single();
 
-        if (user && user.password) {
+        if (user) {
+            if (!user.password) {
+                console.warn(`Login failed for: "${email}". User has no password set.`);
+                return res.status(401).json({ message: 'Invalid email or password' });
+            }
+
             const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
                 return res.json({
@@ -153,11 +158,13 @@ router.post('/login', async (req, res) => {
                     language: user.language,
                     token: generateToken(user.id)
                 });
+            } else {
+                console.warn(`Login failed for: "${email}". Incorrect password.`);
             }
+        } else {
+            console.warn(`Login failed for: "${email}". User not found.`);
         }
 
-        const { data: allUsers } = await supabase.from('users').select('email');
-        console.warn(`Login failed for: "${email}". Current users in Supabase: [${allUsers ? allUsers.map(u => u.email).join(', ') : 'none'}]`);
         res.status(401).json({ message: 'Invalid email or password' });
 
     } catch (error) {
