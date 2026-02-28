@@ -73,7 +73,19 @@ const Dashboard = () => {
         };
 
         loadOfflineData();
-    }, []);
+
+        // Background sync on load if online
+        if (navigator.onLine) {
+            syncAllData(user?.lat && user?.lng ? { lat: user.lat, lng: user.lng } : null)
+                .then(success => {
+                    if (success) {
+                        setWeather(getWeather());
+                        setSeasonal(getSeasonalData());
+                        setLastSync(new Date().toLocaleString());
+                    }
+                });
+        }
+    }, [user?.lat, user?.lng]);
 
     const handleSync = async () => {
         setIsSyncing(true);
