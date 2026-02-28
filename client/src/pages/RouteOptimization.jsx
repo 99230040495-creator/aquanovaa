@@ -11,11 +11,27 @@ import { indianHarbours } from '../data/harbours';
 import { Compass, Map as MapIcon } from 'lucide-react';
 
 // Helper to update map view
+// Helper to update map view and fix layout issues on mobile
 const MapUpdater = ({ center, zoom }) => {
     const map = useMap();
     useEffect(() => {
-        if (center) map.setView(center, zoom);
+        if (center) {
+            map.setView(center, zoom);
+            // Fix: Map sometimes doesn't render fully on mobile load
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100);
+        }
     }, [center, zoom, map]);
+
+    // Secondary fix for initial resize
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            map.invalidateSize();
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [map]);
+
     return null;
 };
 

@@ -4,7 +4,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import './i18n' // Import i18n configuration
-import './pwa'
+// Disable PWA Service Worker when running in a native Capacitor mobile environment
+// to avoid conflicts with Capacitor's local asset scheme.
+if (!window.location.protocol.includes('capacitor:')) {
+  import('./pwa');
+}
 
 import { AuthProvider } from './context/AuthContext';
 import 'leaflet/dist/leaflet.css';

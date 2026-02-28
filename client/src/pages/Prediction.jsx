@@ -10,11 +10,24 @@ import { indianFishZones } from '../data/fishZones';
 import { majorIndianPorts } from '../data/ports';
 
 // Component to update map center when coordinates change
+// Component to update map center and fix layout issues on mobile
 const MapUpdater = ({ center }) => {
     const map = useMap();
     useEffect(() => {
         map.setView(center, map.getZoom());
+        // Fix: Force redraw for mobile/Capacitor layout shifts
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
     }, [center, map]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            map.invalidateSize();
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [map]);
+
     return null;
 };
 
