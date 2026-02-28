@@ -344,7 +344,7 @@ const RouteOptimization = () => {
                                 </Marker>
                             ))}
 
-                            {route && <Polyline positions={route.path} color="#00B4D8" weight={4} dashArray="10, 10" />}
+                            {route && <Polyline positions={route.path} color="#00f2ff" weight={6} dashArray="12, 12" />}
                             {bestHarbour && <MapUpdater center={bestHarbour.coords} zoom={10} />}
                         </MapContainer>
                     ) : (
